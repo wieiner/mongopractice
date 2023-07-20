@@ -1,1 +1,10 @@
-
+spring:
+  data:
+    mongodb:
+      username: cubyMongo
+      password: cubyMongoDEV_P_cuby2023
+      port: 27099
+      host: localhost
+      database: coolectionaggregation
+      authentication-database: admin
+      auto-index-creation: on

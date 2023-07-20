@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.1.1'
     id 'io.spring.dependency-management' version '1.1.0'
+    id 'me.champeau.jmh' version '0.6.8'
 }
 
 group = 'com.example'
@@ -24,10 +25,14 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.jetbrains:annotations:24.0.0'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
+    implementation 'org.openjdk.jmh:jmh-core:1.36'
+    annotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.36'
+
 }
 
 tasks.named('test') {

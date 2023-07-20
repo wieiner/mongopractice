@@ -1,11 +1,17 @@
 package com.example.mongopractice.service;
 
 import com.example.mongopractice.repository.model.T1;
-import com.example.mongopractice.repository.model.T2;
+import com.example.mongopractice.service.model.T1DTO;
+import com.example.mongopractice.service.model.T2DTO;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface T12Service {
-    Flux<T1> getAllT1WithT2();
+    Flux<T1DTO> getAllT1WithT2();
 
-    Flux<T2> findAll();
+    Flux<T2DTO> t2FindAll();
+    Flux<T1DTO> t1FindAll();
+
+    Mono<T2DTO> save(T2DTO t2DTO);
+    Mono<T1DTO> save(T1DTO t1DTO);
 }
