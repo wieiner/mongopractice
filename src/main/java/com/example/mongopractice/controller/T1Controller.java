@@ -4,6 +4,7 @@ import com.example.mongopractice.repository.model.T1;
 import com.example.mongopractice.repository.model.T2;
 import com.example.mongopractice.service.impl.T12ServiceImpl;
 import com.example.mongopractice.service.model.T1DTO;
+import com.example.mongopractice.service.model.T1WithT2sDTO;
 import com.example.mongopractice.service.model.T2DTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,11 @@ public class T1Controller {
     @GetMapping("/t12")
     public Flux<T1DTO> getAllT12() {
         return t12ServiceImpl.getAllT1WithT2();
+    }
+
+    @GetMapping("/t12s")
+    public Flux<T1WithT2sDTO> getAllT12s() {
+        return t12ServiceImpl.getAllT1WithT2s();
     }
 
     @GetMapping("/t1")

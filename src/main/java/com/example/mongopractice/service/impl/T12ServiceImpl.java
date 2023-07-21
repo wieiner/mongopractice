@@ -6,12 +6,10 @@ import com.example.mongopractice.repository.model.T1;
 import com.example.mongopractice.repository.model.T2;
 import com.example.mongopractice.service.T12Service;
 import com.example.mongopractice.service.model.T1DTO;
+import com.example.mongopractice.service.model.T1WithT2sDTO;
 import com.example.mongopractice.service.model.T2DTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.LookupOperation;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -39,6 +37,14 @@ public class T12ServiceImpl implements T12Service {
 
         return t1Repository.getAllWithT2()
                 .map(s -> conversionService.convert(s, T1DTO.class));
+    }
+
+
+    @Override
+    public Flux<T1WithT2sDTO> getAllT1WithT2s() {
+
+        return t1Repository.getAllWithT2s()
+                .map(s -> conversionService.convert(s, T1WithT2sDTO.class));
     }
 
 

@@ -14,14 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class T1  {
+public class T1WithT2s {
     @Id
     private String id;
 
-    @Field("foreign_id")
-    private String foreignId;
 
     @Field("array_ids")
-    private List<String> arrayIds;
-
+    private List<T2> t2s;
 }
