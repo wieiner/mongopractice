@@ -2,72 +2,62 @@ package com.example.mongopractice.service.impl;
 
 import com.example.mongopractice.repository.T1Repository;
 import com.example.mongopractice.repository.T2Repository;
+import com.example.mongopractice.repository.UserRepository;
 import com.example.mongopractice.repository.model.T1;
 import com.example.mongopractice.repository.model.T2;
+import com.example.mongopractice.repository.model.User;
 import com.example.mongopractice.service.T12Service;
 import com.example.mongopractice.service.model.T1DTO;
 import com.example.mongopractice.service.model.T1WithT2sDTO;
 import com.example.mongopractice.service.model.T2DTO;
+import com.example.mongopractice.service.model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static reactor.core.publisher.Flux.just;
-
 @Service
 public class T12ServiceImpl implements T12Service {
     private final T1Repository t1Repository;
     private final T2Repository t2Repository;
+    private final UserRepository userRepository;
     private final ConversionService conversionService;
 
 
-
-
     @Autowired
-    public T12ServiceImpl(T1Repository t1Repository, T2Repository t2Repository, ConversionService conversionService) {
+    public T12ServiceImpl(T1Repository t1Repository, T2Repository t2Repository, UserRepository userRepository, ConversionService conversionService) {
         this.t1Repository = t1Repository;
         this.t2Repository = t2Repository;
+        this.userRepository = userRepository;
         this.conversionService = conversionService;
     }
 
     @Override
     public Flux<T1DTO> getAllT1WithT2() {
-
         return t1Repository.getAllWithT2()
-                .map(s -> conversionService.convert(s, T1DTO.class));
+                .mapNotNull(s -> conversionService.convert(s, T1DTO.class));
     }
-
 
     @Override
     public Flux<T1WithT2sDTO> getAllT1WithT2s() {
-
         return t1Repository.getAllWithT2s()
-                .map(s -> conversionService.convert(s, T1WithT2sDTO.class));
+                .mapNotNull(s -> conversionService.convert(s, T1WithT2sDTO.class));
     }
-
 
     @Override
     public Flux<T2DTO> t2FindAll() {
-        //return Flux.just(new T2DTO("9","999"));
-
-        return  t2Repository
+        return t2Repository
                 .findAll()
                 .mapNotNull(s -> conversionService.convert(s, T2DTO.class));
     }
 
-
     @Override
     public Flux<T1DTO> t1FindAll() {
-        //return Flux.just(new T2DTO("9","999"));
-
-        return  t1Repository
+        return t1Repository
                 .findAll()
                 .mapNotNull(s -> conversionService.convert(s, T1DTO.class));
     }
-
-
 
     @Override
     public Mono<T2DTO> save(T2DTO t2DTO) {
@@ -81,6 +71,20 @@ public class T12ServiceImpl implements T12Service {
         return Mono.justOrEmpty(conversionService.convert(t1DTO, T1.class))
                 .flatMap(t1 -> t1Repository.save(t1)
                         .mapNotNull(t1Fetch -> conversionService.convert(t1Fetch, T1DTO.class)));
+    }
+
+    @Override
+    public Mono<UserDTO> save(UserDTO userDTO) {
+        return Mono.justOrEmpty(conversionService.convert(userDTO, User.class))
+                .flatMap(t1 -> userRepository.save(t1)
+                        .mapNotNull(t1Fetch -> conversionService.convert(t1Fetch, UserDTO.class)));
+    }
+
+    @Override
+    public Flux<UserDTO> userFindAll() {
+        return userRepository
+                .findAll()
+                .mapNotNull(s -> conversionService.convert(s, UserDTO.class));
     }
 }
 

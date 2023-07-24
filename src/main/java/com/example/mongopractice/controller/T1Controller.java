@@ -6,6 +6,7 @@ import com.example.mongopractice.service.impl.T12ServiceImpl;
 import com.example.mongopractice.service.model.T1DTO;
 import com.example.mongopractice.service.model.T1WithT2sDTO;
 import com.example.mongopractice.service.model.T2DTO;
+import com.example.mongopractice.service.model.UserDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,6 +48,12 @@ public class T1Controller {
 
     }
 
+    @GetMapping("/user")
+    public Flux<UserDTO> getAllUsers() {
+        return t12ServiceImpl.userFindAll();
+
+    }
+
 
     @PostMapping("/t2")
     public Mono<T2DTO> createT2(@RequestBody T2DTO t2DTO) {
@@ -56,6 +63,31 @@ public class T1Controller {
     @PostMapping("/t1")
     public Mono<T1DTO> createT1(@RequestBody T1DTO t1DTO) {
         return t12ServiceImpl.save(t1DTO);
+    }
+
+
+/* json for testing purposes
+{
+    "name" : "Ivanov",
+    "surname" : "Sergey",
+
+    "address" : {
+    "phone": "333-22-333",
+    "email": "SIvanov@gmail.com",
+    "homeAddress":
+    {
+    "city" :   "Minsk",
+    "street":  "ul.Traktornaya",
+    "building": "10"
+    }
+
+    }
+}
+
+ */
+    @PostMapping("/user")
+    public Mono<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+        return t12ServiceImpl.save(userDTO);
     }
 
 }
