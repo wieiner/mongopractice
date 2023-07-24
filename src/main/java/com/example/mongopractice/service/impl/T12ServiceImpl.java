@@ -21,15 +21,13 @@ import reactor.core.publisher.Mono;
 public class T12ServiceImpl implements T12Service {
     private final T1Repository t1Repository;
     private final T2Repository t2Repository;
-    private final UserRepository userRepository;
     private final ConversionService conversionService;
 
 
     @Autowired
-    public T12ServiceImpl(T1Repository t1Repository, T2Repository t2Repository, UserRepository userRepository, ConversionService conversionService) {
+    public T12ServiceImpl(T1Repository t1Repository, T2Repository t2Repository, ConversionService conversionService) {
         this.t1Repository = t1Repository;
         this.t2Repository = t2Repository;
-        this.userRepository = userRepository;
         this.conversionService = conversionService;
     }
 
@@ -73,19 +71,6 @@ public class T12ServiceImpl implements T12Service {
                         .mapNotNull(t1Fetch -> conversionService.convert(t1Fetch, T1DTO.class)));
     }
 
-    @Override
-    public Mono<UserDTO> save(UserDTO userDTO) {
-        return Mono.justOrEmpty(conversionService.convert(userDTO, User.class))
-                .flatMap(t1 -> userRepository.save(t1)
-                        .mapNotNull(t1Fetch -> conversionService.convert(t1Fetch, UserDTO.class)));
-    }
-
-    @Override
-    public Flux<UserDTO> userFindAll() {
-        return userRepository
-                .findAll()
-                .mapNotNull(s -> conversionService.convert(s, UserDTO.class));
-    }
 }
 
 

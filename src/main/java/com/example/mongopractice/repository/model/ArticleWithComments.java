@@ -8,12 +8,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
+import java.util.List;
 
 @Document(collection = "articles")
 @AllArgsConstructor
 @Getter
 @Setter
-public class Article {
+public class ArticleWithComments {
     @Id
     private String id;
     @Field("title")
@@ -24,4 +25,7 @@ public class Article {
     private String content;
     @Field("publishDate")
     private Date publishDate;
+    @Field("comments")
+    List<Comment> comments;
+
 }

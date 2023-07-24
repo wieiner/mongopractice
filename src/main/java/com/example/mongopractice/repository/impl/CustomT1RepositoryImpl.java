@@ -15,8 +15,8 @@ public class CustomT1RepositoryImpl implements CustomT1Repository {
     public CustomT1RepositoryImpl(ReactiveMongoTemplate reactiveMongoTemplate) {
         this.reactiveMongoTemplate = reactiveMongoTemplate;
     }
-    //1 generic
-    //2 агрегирующая сущность
+
+
     @Override
     public Flux<T1> getAllWithT2() {
         LookupOperation lookupOperation = LookupOperation.newLookup()

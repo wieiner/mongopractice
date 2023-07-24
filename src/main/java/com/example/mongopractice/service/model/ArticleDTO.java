@@ -1,27 +1,24 @@
-package com.example.mongopractice.repository.model;
+package com.example.mongopractice.service.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
 
-@Document(collection = "articles")
-@AllArgsConstructor
+
 @Getter
 @Setter
-public class Article {
-    @Id
+@AllArgsConstructor
+public class ArticleDTO {
+
     private String id;
-    @Field("title")
     private String title;
-    @Field("authorId")
     private String authorId;
-    @Field("content")
     private String content;
-    @Field("publishDate")
     private Date publishDate;
+
+    // Getters and setters...
 }
